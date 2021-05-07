@@ -10,4 +10,5 @@ public class ShortUrlResponse {
 	private String shortenedUrl;
 	private Long requestCount;
 	private UrlType urlType;
+	private Boolean convertSuccess;
 }

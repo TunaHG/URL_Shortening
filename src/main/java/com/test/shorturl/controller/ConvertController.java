@@ -20,6 +20,12 @@ public class ConvertController {
 		ModelAndView mv = new ModelAndView();
 		ShortUrlResponse shortUrlResponse = convertService.convert(url);
 
+		if(shortUrlResponse.getConvertSuccess() == false) {
+			model.addAttribute("resultShortenedUrl", "잘못된 URL입니다.");
+			mv.setViewName("index");
+			return mv;
+		}
+
 		if(shortUrlResponse.getUrlType() == UrlType.SHORT) {
 			mv.setViewName("redirect:" + shortUrlResponse.getOriginUrl());
 			return mv;

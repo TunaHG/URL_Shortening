@@ -17,12 +17,22 @@ public class ConvertService {
 	private final String Base62String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 	public ShortUrlResponse convert(String url) {
+		if(url.equals("") || url.isEmpty())
+			return ShortUrlResponse.builder()
+					.convertSuccess(false)
+					.build();
+
 		if(url.startsWith(URL_PREFIX)) {
 			ShortUrl shortUrl = shortUrlRepository.findShortUrlByShortenedUrl(url);
+			if(shortUrl == null)
+				return ShortUrlResponse.builder()
+						.convertSuccess(false)
+						.build();
 			System.out.println("Already Shortened, Redirect Origin URL: " + shortUrl.getOriginUrl());
 			return ShortUrlResponse.builder()
 					.originUrl(shortUrl.getOriginUrl())
 					.urlType(UrlType.SHORT)
+					.convertSuccess(true)
 					.build();
 		}
 		else {
@@ -43,6 +53,7 @@ public class ConvertService {
 						.shortenedUrl(updateShortUrl.getShortenedUrl())
 						.requestCount(updateShortUrl.getRequestCount())
 						.urlType(UrlType.ORIGIN)
+						.convertSuccess(true)
 						.build();
 			}
 
@@ -55,6 +66,7 @@ public class ConvertService {
 					.shortenedUrl(URL_PREFIX + shortenedUrl)
 					.requestCount(shortUrl.getRequestCount())
 					.urlType(UrlType.ORIGIN)
+					.convertSuccess(true)
 					.build();
 		}
 	}

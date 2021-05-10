@@ -14,6 +14,8 @@
 
 ## How to run
 ```bash
+$ git clone https://github.com/TunaHG/URL_Shortening.git
+$ cd URL_Shortening
 $ ./gradlew build
 $ java -jar ./build/libs/shorturl-0.0.1-SNAPSHOT.jar
 ```

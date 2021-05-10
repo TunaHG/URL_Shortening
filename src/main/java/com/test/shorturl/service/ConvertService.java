@@ -28,7 +28,6 @@ public class ConvertService {
 				return ShortUrlResponse.builder()
 						.convertSuccess(false)
 						.build();
-			System.out.println("Already Shortened, Redirect Origin URL: " + shortUrl.getOriginUrl());
 			return ShortUrlResponse.builder()
 					.originUrl(shortUrl.getOriginUrl())
 					.urlType(UrlType.SHORT)
@@ -39,19 +38,13 @@ public class ConvertService {
 			ShortUrl shortUrl = shortUrlRepository.findShortUrlByOriginUrl(url);
 
 			if(shortUrl != null) {
-				ShortUrl updateShortUrl = ShortUrl.builder()
-						.id(shortUrl.getId())
-						.originUrl(shortUrl.getOriginUrl())
-						.shortenedUrl(shortUrl.getShortenedUrl())
-						.requestCount(shortUrl.getRequestCount() + 1)
-						.build();
+				shortUrl.setRequestCount(shortUrl.getRequestCount() + 1);
 
-				shortUrlRepository.save(updateShortUrl);
+				shortUrlRepository.save(shortUrl);
 
-				System.out.println("Already Shortened, Result Shortened URL: " + updateShortUrl.getShortenedUrl());
 				return ShortUrlResponse.builder()
-						.shortenedUrl(updateShortUrl.getShortenedUrl())
-						.requestCount(updateShortUrl.getRequestCount())
+						.shortenedUrl(shortUrl.getShortenedUrl())
+						.requestCount(shortUrl.getRequestCount())
 						.urlType(UrlType.ORIGIN)
 						.convertSuccess(true)
 						.build();

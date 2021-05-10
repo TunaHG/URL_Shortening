@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class ConvertController {
 	private final ConvertService convertService;
 
-	@PostMapping("/convert")
+	@PostMapping(value = "/convert")
 	public ModelAndView convert(Model model, @Valid @ModelAttribute ShortUrlRequest shortUrlRequest) {
 		ModelAndView mv = new ModelAndView();
 		ShortUrlResponse shortUrlResponse = convertService.convert(shortUrlRequest.getUrl());

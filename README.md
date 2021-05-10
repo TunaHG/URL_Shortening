@@ -13,6 +13,10 @@
 * Unit test 및 Integration test 작성. (가산점 부여항목)
 
 ## How to run
+```bash
+$ ./gradlew build
+$ java -jar ./build/libs/shorturl-0.0.1-SNAPSHOT.jar
+```
 
 ## Directory Structure
 ```bash
@@ -20,26 +24,24 @@
 ├── main
 │   ├── java
 │   │   ├── controller
-│   │   │   ├── MainController.java
-│   │   │   └── ConvertController.java
+│   │   │   ├── MainController
+│   │   │   └── ConvertController
 │   │   ├── domain
+│   │   │   ├── ShortUrlRepository
 │   │   │   └── ShortUrl
 │   │   ├── dto
-│   │   │   └── ShortUrl
+│   │   │   ├── ShortUrlResponse
+│   │   │   └── UrlType
 │   │   ├── service
-│   │   │   └── ConvertService.java
-│   │   └── Application.java
+│   │   │   └── ConvertService
+│   │   └── Application
 │   └── resources
-│       ├── schema.sql
 │       └── application.yml
 └── test
-    ├── java
-    │   ├── controller
-    │   │   └── ConvertControllerTest.java
-    │   ├── service
-    │   │   └── ConvertServiceTest.java
-    │   └── ApplicationTest.java
-    └── resources
-        ├── data.sql
-        └── application.yml
+    └── java
+        ├── controller
+        │   └── ConvertControllerTest
+        ├── service
+        │   └── ConvertServiceTest
+        └── ApplicationTest
 ```

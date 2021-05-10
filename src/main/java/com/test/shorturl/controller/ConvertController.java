@@ -1,24 +1,32 @@
 package com.test.shorturl.controller;
 
+import com.test.shorturl.dto.ShortUrlRequest;
 import com.test.shorturl.dto.ShortUrlResponse;
 import com.test.shorturl.dto.UrlType;
 import com.test.shorturl.service.ConvertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Controller
 public class ConvertController {
 	private final ConvertService convertService;
 
-	@GetMapping("/convert")
-	public ModelAndView convert(Model model, @RequestParam String url) {
+	@PostMapping("/convert")
+	@ResponseBody
+	public ModelAndView convert(Model model, @Valid @ModelAttribute ShortUrlRequest shortUrlRequest) {
 		ModelAndView mv = new ModelAndView();
-		ShortUrlResponse shortUrlResponse = convertService.convert(url);
+		ShortUrlResponse shortUrlResponse = convertService.convert(shortUrlRequest.getUrl());
 
 		if(!shortUrlResponse.getConvertSuccess()) {
 			model.addAttribute("resultShortenedUrl", "잘못된 URL입니다.");
@@ -34,6 +42,14 @@ public class ConvertController {
 				mv.setViewName("index");
 			}
 		}
+		return mv;
+	}
+
+	@ExceptionHandler(BindException.class)
+	public ModelAndView validateException(Model model) {
+		ModelAndView mv = new ModelAndView();
+		model.addAttribute("resultShortenedUrl", "잘못된 URL입니다.");
+		mv.setViewName("index");
 		return mv;
 	}
 }

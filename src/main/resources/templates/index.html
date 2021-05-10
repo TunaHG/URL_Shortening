@@ -6,11 +6,11 @@
 </head>
 <body>
     <H1>무신사 과제테스트, URL Shortening</H1>
-    <form action="/convert" method="get">
-        <label for="url">Input URL: </label><input type="text" id="url" name="url"/>
+    <form action="/convert" method="post">
+        Input URL:<input type="text" name="url"/>
         <button type="submit">요청</button> <br>
+    </form>
         Shortened URL: <p th:text="${resultShortenedUrl}"></p>
         URL Request Count: <p th:text="${resultRequestCount}"></p>
-    </form>
 </body>
 </html>

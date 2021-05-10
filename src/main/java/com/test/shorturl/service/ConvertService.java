@@ -28,6 +28,7 @@ public class ConvertService {
 				return ShortUrlResponse.builder()
 						.convertSuccess(false)
 						.build();
+
 			return ShortUrlResponse.builder()
 					.originUrl(shortUrl.getOriginUrl())
 					.urlType(UrlType.SHORT)
@@ -39,7 +40,6 @@ public class ConvertService {
 
 			if(shortUrl != null) {
 				shortUrl.setRequestCount(shortUrl.getRequestCount() + 1);
-
 				shortUrlRepository.save(shortUrl);
 
 				return ShortUrlResponse.builder()
@@ -52,7 +52,6 @@ public class ConvertService {
 
 			shortUrl = shortUrlRepository.save(ShortUrl.builder().originUrl(url).requestCount(1L).build());
 			String shortenedUrl = Base62Encode(shortUrl.getId());
-			System.out.println("New Shortened, Result Shortened URL: " + shortenedUrl);
 			shortUrlRepository.save(ShortUrl.builder()
 					.id(shortUrl.getId()).originUrl(url).shortenedUrl(URL_PREFIX + shortenedUrl).requestCount(1L).build());
 			return ShortUrlResponse.builder()

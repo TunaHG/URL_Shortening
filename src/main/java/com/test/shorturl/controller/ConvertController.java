@@ -8,11 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -23,7 +22,6 @@ public class ConvertController {
 	private final ConvertService convertService;
 
 	@PostMapping("/convert")
-	@ResponseBody
 	public ModelAndView convert(Model model, @Valid @ModelAttribute ShortUrlRequest shortUrlRequest) {
 		ModelAndView mv = new ModelAndView();
 		ShortUrlResponse shortUrlResponse = convertService.convert(shortUrlRequest.getUrl());
